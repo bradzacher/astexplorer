@@ -23,29 +23,12 @@ const plugins = [
   // so that code patch will never be executed.
   new webpack.IgnorePlugin(/^eslint$/, /babel-eslint/),
 
-  // Prettier //
-
-  // We don't use these parsers with prettier, so we don't need to include them
-  new webpack.IgnorePlugin(/parser-flow/, /\/prettier/),
-  new webpack.IgnorePlugin(/parser-glimmer/, /\/prettier/),
-  new webpack.IgnorePlugin(/parser-graphql/, /\/prettier/),
-  new webpack.IgnorePlugin(/parser-markdown/, /\/prettier/),
-  new webpack.IgnorePlugin(/parser-parse5/, /\/prettier/),
-  new webpack.IgnorePlugin(/parser-postcss/, /\/prettier/),
-  new webpack.IgnorePlugin(/parser-typescript/, /\/prettier/),
-  new webpack.IgnorePlugin(/parser-vue/, /\/prettier/),
-  new webpack.IgnorePlugin(/parser-yaml/, /\/prettier/),
-
   // eslint //
 
   // Shim ESLint stuff that's only relevant for Node.js
   new webpack.NormalModuleReplacementPlugin(
     /(cli-engine|testers\/rule-tester)/,
     'node-libs-browser/mock/empty'
-  ),
-  new webpack.NormalModuleReplacementPlugin(
-    /load-rules/,
-    __dirname + '/src/parsers/js/transformers/eslint1/loadRulesShim.js'
   ),
 
   // There seems to be a problem with webpack loading an index.js file that
@@ -62,12 +45,6 @@ const plugins = [
   ),
 
   // More shims
-
-  // Doesn't look like jest-validate is useful in our case (prettier uses it)
-  new webpack.NormalModuleReplacementPlugin(
-    /jest-validate/,
-    __dirname + '/src/shims/jest-validate.js'
-  ),
 
   // Hack to disable Webpack dynamic requires in ESLint, so we don't end up
   // bundling the entire ESLint directory including files we don't even need.
@@ -142,38 +119,16 @@ module.exports = Object.assign({
           /\/acorn.es.js$/,
           /\/acorn.mjs$/,
           /\/acorn-loose.mjs$/,
-          path.join(__dirname, 'node_modules', '@glimmer', 'compiler', 'dist'),
-          path.join(__dirname, 'node_modules', '@glimmer', 'syntax', 'dist'),
-          path.join(__dirname, 'node_modules', '@glimmer', 'util', 'dist'),
-          path.join(__dirname, 'node_modules', '@glimmer', 'wire-format', 'dist'),
           path.join(__dirname, 'node_modules', 'ast-types'),
-          path.join(__dirname, 'node_modules', 'babel-eslint'),
-          path.join(__dirname, 'node_modules', 'babel-eslint8'),
-          path.join(__dirname, 'node_modules', 'jsesc'),
           path.join(__dirname, 'node_modules', 'eslint-visitor-keys'),
           path.join(__dirname, 'node_modules', 'babel7'),
-          path.join(__dirname, 'node_modules', 'babel-plugin-macros'),
-          path.join(__dirname, 'node_modules', 'json-parse-better-errors'),
-          path.join(__dirname, 'node_modules', 'babylon7'),
           path.join(__dirname, 'node_modules', 'eslint', 'lib'),
           path.join(__dirname, 'node_modules', 'eslint-scope'),
-          path.join(__dirname, 'node_modules', 'eslint-visitor-keys'),
-          path.join(__dirname, 'node_modules', 'eslint3'),
-          path.join(__dirname, 'node_modules', 'eslint4'),
-          path.join(__dirname, 'node_modules', 'jscodeshift', 'src'),
-          path.join(__dirname, 'node_modules', 'lodash-es'),
-          path.join(__dirname, 'node_modules', 'prettier'),
           path.join(__dirname, 'node_modules', 'react-redux', 'es'),
           path.join(__dirname, 'node_modules', 'recast'),
           path.join(__dirname, 'node_modules', 'redux', 'es'),
           path.join(__dirname, 'node_modules', 'redux-saga', 'es'),
-          path.join(__dirname, 'node_modules', 'regexp-tree'),
-          path.join(__dirname, 'node_modules', 'simple-html-tokenizer'),
           path.join(__dirname, 'node_modules', 'symbol-observable', 'es'),
-          path.join(__dirname, 'node_modules', 'typescript-eslint-parser'),
-          path.join(__dirname, 'node_modules', 'webidl2'),
-          path.join(__dirname, 'node_modules', 'tslint'),
-          path.join(__dirname, 'node_modules', 'tslib'),
           path.join(__dirname, 'src'),
         ],
         loader: 'babel-loader',
