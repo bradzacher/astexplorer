@@ -234,6 +234,7 @@ let Element = class extends React.Component {
           prefix = '{';
           suffix = '}';
           let elements = [...treeAdapter.walkNode(value)]
+            .sort((a, b) => a.key.localeCompare(b.key))
             .map(({key, value, computed}) => this._createSubElement(
               key,
               value,
